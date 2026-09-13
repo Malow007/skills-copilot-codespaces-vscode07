@@ -1,0 +1,11 @@
+# Obligatorio
+PyYAML>=6.0
+
+# Recomendados
+imageio-ffmpeg>=0.4.9   # ffmpeg estático, por si no lo tienes en el sistema
+pillow>=10.0            # rótulos cuando tu ffmpeg no trae el filtro drawtext
+
+# Voz (elige uno; sin ninguno el vídeo se monta mudo con los tiempos estimados)
+# kokoro                # Apache 2.0, corre en CPU, no clona voz
+# soundfile             # necesario junto a kokoro
+# piper-tts             # requiere descargar un modelo .onnx

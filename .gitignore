@@ -35,3 +35,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# videogen
+videogen/.videogen-*/
+*.mp4
+!videogen/assets/*.mp4
+__pycache__/
+*.pyc

@@ -1,0 +1,45 @@
+# Guion de ejemplo. Cópialo, cambia los textos y apunta 'visual' a tus capturas.
+proyecto: acme-demo
+
+video:
+  resolucion: 1920x1080
+  fps: 30
+
+voz:
+  backend: auto      # auto | kokoro | piper | espeak | silencio
+  idioma: es
+  velocidad: 1.0
+  # nombre: ef_dora  # voz concreta (kokoro) o ruta al .onnx (piper)
+
+subtitulos: true
+# musica: assets/fondo.mp3
+
+escenas:
+  - titulo: El problema
+    narracion: >-
+      Cada mañana, el equipo de almacén pierde veinte minutos largos
+      buscando qué pedidos salen hoy y en qué furgoneta van.
+    visual: assets/ejemplo-panel.png
+    efecto: zoom-in
+
+  - titulo: Todo en un panel
+    narracion: >-
+      Con Acme abres el panel y lo ves de un vistazo: pendientes, en ruta
+      y entregados, actualizándose solos conforme el repartidor avanza.
+    visual: assets/ejemplo-panel.png
+    efecto: pan-derecha
+
+  - titulo: También en el móvil
+    narracion: >-
+      El repartidor escanea el bulto desde el móvil y confirma la entrega
+      con un toque. Si se queda sin cobertura, se sincroniza al volver.
+    visual: assets/ejemplo-movil.png
+    efecto: zoom-out
+
+  - titulo: El resultado
+    narracion: >-
+      En doce semanas, el tiempo medio por pedido baja un cincuenta y ocho
+      por ciento. Pruébalo gratis en acme punto app.
+    visual: assets/ejemplo-informe.png
+    efecto: estatico
+    duracion_min: 6
