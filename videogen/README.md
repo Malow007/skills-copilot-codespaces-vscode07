@@ -89,11 +89,41 @@ Una escena puede ser también una cadena suelta: se toma como la narración.
 | Motor | Licencia | Notas |
 |---|---|---|
 | `kokoro` | Apache 2.0 | 82M, corre en CPU, buena calidad. No clona voz. `pip install kokoro soundfile` |
-| `piper` | MIT | rápido y offline; hay que descargar un modelo `.onnx` e indicarlo en `voz.nombre` |
+| `piper` | MIT | **la opción recomendada**: neuronal, offline, sin GPU, arranca en milisegundos |
 | `espeak` | GPL | robótico, pero sirve para validar tiempos y montaje. `apt install espeak-ng` |
 | `silencio` | — | pista muda con la duración estimada; para revisar el montaje sin instalar nada |
 
 En modo `auto` se coge el primero disponible en ese orden.
+
+### Instalar Piper (voz neuronal, 2 minutos)
+
+```bash
+# binario
+curl -L -o piper.tgz https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_x86_64.tar.gz
+sudo tar xzf piper.tgz -C /opt && sudo ln -sf /opt/piper/piper /usr/local/bin/piper
+
+# voz en castellano
+sudo mkdir -p /opt/piper-voices && cd /opt/piper-voices
+sudo curl -L https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-es-carlfm-x-low.tar.gz | sudo tar xz
+```
+
+Y en el guion:
+
+```yaml
+voz:
+  backend: piper
+  nombre: /opt/piper-voices/es-carlfm-x-low.onnx
+```
+
+(o `export PIPER_VOICE=/opt/piper-voices/es-carlfm-x-low.onnx` y no tocas el guion).
+
+Hay más voces en castellano en las
+[releases de piper](https://github.com/rhasspy/piper/releases/tag/v0.0.2)
+(`es-mls_10246-low`, `es-mls_9972-low`) y de mejor calidad en Hugging Face
+(`es_ES-davefx-medium`, `es_ES-sharvard-medium`), si tu red llega hasta allí.
+
+La narración se normaliza a -16 LUFS antes de mezclarla, así que todas las escenas
+salen al mismo volumen aunque cambies de motor a mitad de proyecto.
 
 ## De dónde salen las capturas
 
@@ -121,5 +151,8 @@ el pipeline funciona entero sin ellos.
 - Si tu build de ffmpeg no trae `drawtext`, los rótulos se generan con Pillow como imagen
   superpuesta; si tampoco hay Pillow, se omiten y te avisa.
 - Si falta `libass`, los subtítulos no se incrustan, pero el `.srt` se genera igual.
-- Verificado en este repo con `espeak` y `silencio`; `kokoro` y `piper` siguen su API
-  documentada pero no se han podido probar aquí (sin GPU ni descarga de modelos).
+- Verificado de punta a punta con `piper`, `espeak` y `silencio`. `kokoro` sigue su API
+  documentada pero no se ha podido probar (requiere descargar pesos de Hugging Face).
+- Las voces `-low` de piper suenan a 16 kHz: correctas para una demo, algo planas para
+  una pieza de marketing. Para eso, sube a una voz `medium` o graba tu propia locución
+  y pásala como WAV.

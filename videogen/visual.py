@@ -158,7 +158,8 @@ def construir(escena: Escena, guion: Guion, audio: Path, dur: float, salida: Pat
 
     segmentos.append(",".join([cadena, *posteriores]) + "[v]")
     segmentos.append(
-        f"[1:a]aresample=48000,adelay=delays=250:all=1,apad,atrim=0:{dur:.3f},"
+        f"[1:a]loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,"
+        f"adelay=delays=250:all=1,apad,atrim=0:{dur:.3f},"
         f"asetpts=N/SR/TB,afade=t=in:st=0:d=0.08,afade=t=out:st={max(dur - 0.18, 0):.3f}:d=0.18[a]"
     )
 
